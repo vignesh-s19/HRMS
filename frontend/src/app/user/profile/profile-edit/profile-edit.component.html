@@ -1,0 +1,134 @@
+
+  <mat-stepper orientation="vertical" [linear]="false" #stepper>
+    <mat-step [stepControl]="basicInfoFormGroup">
+        <ng-template matStepLabel>Basic Info</ng-template>
+        <div class="mb20" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap=5% fxLayoutAlign="space-around stretch">
+          <mat-card fxFlex.gt-xs=15%>
+            <mat-card-content>
+              <image-info></image-info>
+              </mat-card-content>
+          </mat-card>
+          <mat-card fxFlex.gt-xs=80%>
+            <mat-card-content>
+              <primary-info></primary-info>
+            </mat-card-content>
+          </mat-card>
+        </div>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Communication Info</ng-template>
+        <div class="mb20" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap=0% fxLayoutAlign="space-around stretch">
+          <mat-card fxFlex.gt-xs=100%>
+            <mat-card-content>
+              <correspondence-info></correspondence-info>
+              <permanent-info></permanent-info>
+          </mat-card-content>
+          </mat-card>
+        </div>
+        <div align="end">
+          <button mat-raised-button color="warn" class="btn-space" matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" class="btn-space" matStepperNext>Save & Continue</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Personal Info</ng-template>
+        <personal-info></personal-info>
+        <div align="end">
+          <button mat-raised-button color="warn" class="btn-space" matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" class="btn-space" matStepperNext>Save & Continue</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Reference Info</ng-template>
+         <reference-info></reference-info>
+         <div align="end">
+          <button mat-raised-button color="warn" class="btn-space" matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" class="btn-space" matStepperNext>Save & Continue</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Job History Info</ng-template>
+        <job-history-info></job-history-info>
+        <div align="end">
+          <button mat-raised-button color="warn" class="btn-space" matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" class="btn-space" matStepperNext>Save & Continue</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Education Info</ng-template>
+        <education-info></education-info>
+        <div align="end">
+          <button mat-raised-button color="warn" class="btn-space" matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" class="btn-space" matStepperNext>Save & Continue</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Nominee Info</ng-template>
+        <nominee-info></nominee-info>
+        <div align="end">
+          <button mat-raised-button color="warn" class="btn-space" matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" class="btn-space" matStepperNext>Save & Continue</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Dependent Info</ng-template>
+        <dependent-info></dependent-info>
+        <div align="end">
+          <button mat-raised-button color="warn" class="btn-space" matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" class="btn-space" matStepperNext>Save & Continue</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Bank Info</ng-template>
+        <bank-info></bank-info>
+        <div align="end">
+          <button mat-raised-button color="warn" class="btn-space" matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" class="btn-space" matStepperNext>Save & Continue</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Emergency Contact Info</ng-template>
+        <emergency-contact-info></emergency-contact-info>
+        <div align="end">
+          <button mat-raised-button color="warn" class="btn-space" matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" class="btn-space" matStepperNext>Save & Continue</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Profile View</ng-template>
+        <profile-view></profile-view>
+        <div align="end">
+          <button mat-raised-button color="warn" class="btn-space" matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" class="btn-space" matStepperNext>Save & Continue</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div align="end">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+  

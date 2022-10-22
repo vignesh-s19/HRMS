@@ -1,0 +1,31 @@
+<form [formGroup]="spouseForm" #spouse="ngForm">
+    <mat-card-header>
+    <mat-card-title>Spouse’s Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="">
+    <p>
+        <label>Maritial Status: </label>
+        <mat-radio-group>
+        <mat-radio-button value="yes">Yes</mat-radio-button>
+        <mat-radio-button value="no">No</mat-radio-button>
+        </mat-radio-group>
+    </p>
+    <p>
+        <mat-form-field>
+        <input matInput placeholder="Spouse’s Name" formControlName="spouseName" [class.is-invalid]="spouse.submitted && spouseForm.get('spouseName')?.invalid">
+        <mat-error class="invalid-feedback">Spouse’s name is required</mat-error>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field>
+        <input matInput placeholder="Spouse’s Employer" formControlName="spouseEmployer" [class.is-invalid]="spouse.submitted && spouseForm.get('spouseEmployer')?.invalid">
+        <mat-error class="invalid-feedback">Spouse’s employer name is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+        <input matInput placeholder="Spouse’s Work Phone" formControlName="spousePhone" [class.is-invalid]="spouse.submitted && spouseForm.get('spousePhone')?.invalid">
+        <mat-error class="invalid-feedback">Spouse’s work phone number is required</mat-error>
+        </mat-form-field>
+    </p>
+    </mat-card-content>
+</form>
+

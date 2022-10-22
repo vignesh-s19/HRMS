@@ -1,0 +1,63 @@
+{
+  "users": [
+    {
+      "id": "6346a63e14a75b00dfaea269",
+      "userName": "",
+      "email": "aprilcox@newcube.com",
+      "fullName": "",
+      "userRole": "user",
+      "docs": true,
+      "empForm": true,
+      "status": "Activated"
+    },
+    {
+      "fullName": "hithan",
+      "password": "Gambler@93",
+      "PhoneNumber": "9480988298",
+      "confirmPassword": "Gambler@93",
+      "id": "OCNz9GV"
+    },
+    {
+      "fullName": "venom",
+      "password": "Unlock@93",
+      "PhoneNumber": "9999999999",
+      "confirmPassword": "Unlock@93",
+      "id": "TgJBuCU"
+    },
+    {
+      "fullName": "",
+      "password": "",
+      "PhoneNumber": "",
+      "confirmPassword": "",
+      "id": "I-BaxXJ"
+    },
+    {
+      "fullName": "navab",
+      "password": "Unlock@93",
+      "PhoneNumber": "1234567890",
+      "confirmPassword": "Unlock@93",
+      "id": "BVM0bqs"
+    },
+    {
+      "fullName": "mani",
+      "password": "123@Mani",
+      "PhoneNumber": "1234567890",
+      "confirmPassword": "123@Mani",
+      "id": "T3lVVUF"
+    },
+    {
+      "fullName": "chandan",
+      "password": "Chandan@123",
+      "PhoneNumber": "9999999999",
+      "confirmPassword": "Chandan@123",
+      "id": "OtlwciN"
+    },
+    {
+      "fullName": "munna",
+      "password": "Unlock@93",
+      "PhoneNumber": "9480988298",
+      "confirmPassword": "Unlock@93",
+      "id": "ch6-60i"
+    }
+  ]
+}

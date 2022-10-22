@@ -1,0 +1,130 @@
+<form [formGroup]="basicInfoFormGroup" (ngSubmit)="onSubmit()" #basic="ngForm">
+  <div class="content pt10" fxLayout="row" fxLayout.xs="column"  fxFlexFill>
+      <div class="mb10"fxFlex="20">
+        <mat-form-field appearance="fill">
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="Steve" formControlName="firstName" name="firstName" [(ngModel)]="basicInfo.firstName" [class.is-invalid]="basic.submitted && basicInfoFormGroup.get('firstName')?.invalid">
+          <mat-error class="invalid-feedback"> First name is required</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <mat-form-field appearance="fill">
+          <mat-label>Middle Name</mat-label>
+          <input matInput formControlName="middleName" name="middleName" [(ngModel)]="basicInfo.middleName" placeholder="Rogers">
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <mat-form-field appearance="fill">
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="Last name" formControlName="lastName" name="lastName" [(ngModel)]="basicInfo.lastName" [class.is-invalid]="basic.submitted && basicInfoFormGroup.get('lastName')?.invalid">
+          <mat-error class="invalid-feedback">Last name is required</mat-error>
+        </mat-form-field>
+      </div>
+  </div>
+  <div class="content pt10" fxLayout="row" fxLayout.xs="column"  fxFlexFill>
+    <div class="mb10"fxFlex="20">
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="As per Aadhar" formControlName="aadhaarName" name="aadhaarName" [(ngModel)]="basicInfo.aadhaarName" [class.is-invalid]="basic.submitted && basicInfoFormGroup.get('aadhaarName')?.invalid">
+        <mat-error class="invalid-feedback">Aadhaar name is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxFlex="20">
+      <mat-form-field appearance="fill">
+        <mat-label>Aadhar Number</mat-label>
+        <input matInput placeholder="0987 7654 9876" formControlName="aadhaarNumber" name="aadhaarNumber" [(ngModel)]="basicInfo.aadhaarNumber" [class.is-invalid]="basic.submitted && basicInfoFormGroup.get('aadhaarNumber')?.invalid">
+        <mat-error class="invalid-feedback">Aadhaar number is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxFlex="20">
+      <mat-form-field class="columns"  appearance="fill">
+          <mat-label *ngIf="aadhaarFile; else aadhaarFileTemplate">{{aadhaarFile.name}}</mat-label>
+          <ng-template #aadhaarFileTemplate>
+              <mat-label>Aadhar card</mat-label>
+          </ng-template>
+          <input matInput disabled>
+          <button  mat-icon-button matSuffix (click)="fileInput.click()">
+              <mat-icon class="material-icons">attach_file</mat-icon>
+          </button>
+          <input hidden (change)="onSelectAadhaarFile($event)" #fileInput type="file" id="file">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="content pt10" fxLayout="row" fxLayout.xs="column"  fxFlexFill>
+    <div class="mb10"fxFlex="20">
+      <mat-form-field appearance="fill">
+        <mat-label>Date of Birth</mat-label>
+        <input matInput placeholder="05/30/2000" [matDatepicker]="picker" (focus)="picker.open()"  formControlName="dob" name="dob" [(ngModel)]="basicInfo.dob" [class.is-invalid]="basic.submitted && basicInfoFormGroup.get('dob')?.invalid">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-error class="invalid-feedback">Date of birth is required</mat-error>
+      </mat-form-field>
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
+    <div fxFlex="20">
+      <mat-form-field appearance="fill">
+        <mat-label>PAN Number</mat-label>
+        <input matInput placeholder="GMSPM14141M" formControlName="panNumber" name="panNumber" [(ngModel)]="basicInfo.panNumber" [class.is-invalid]="basic.submitted && basicInfoFormGroup.get('panNumber')?.invalid">
+        <mat-error class="invalid-feedback">PAN number is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxFlex="20">
+      <mat-form-field class="columns" appearance="fill">
+        <mat-label *ngIf="PANFile; else panFileTemplate">{{PANFile.name}}</mat-label>
+        <ng-template #panFileTemplate>
+          <mat-label>PAN card</mat-label>
+        </ng-template>
+        <input matInput disabled>
+        <button  mat-icon-button matSuffix (click)="inputPANfile.click()">
+            <mat-icon class="material-icons">attach_file</mat-icon>
+        </button>
+        <input hidden (change)="onSelectPANFile($event)" #inputPANfile type="file" id="file">
+      </mat-form-field>
+    </div>   
+  </div>
+  <div class="content pt10" fxLayout="row" fxLayout.xs="column" fxFlexFill>
+    <div fxFlex="30">
+      <mat-button-toggle-group name="fontStyle" aria-label="Font Style"> 
+        <mat-button-toggle *ngFor="let gt of guardianTypes" value="gt">{{gt}}</mat-button-toggle>
+      </mat-button-toggle-group>
+      <div fxFlex="25">
+        <mat-form-field appearance="fill">
+          <mat-label>Guardian Name</mat-label>
+          <input matInput placeholder="" formControlName="guardianName" name="guardianName" [(ngModel)]="basicInfo.guardianName" [class.is-invalid]="basic.submitted && basicInfoFormGroup.get('guardianName')?.invalid">
+          <mat-error class="invalid-feedback">Guardian Name is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="content pt10" fxLayout="row" fxLayout.xs="column"  fxFlexFill>
+    <div fxFlex="20">
+      <mat-form-field appearance="fill">
+        <mat-label>Nationality</mat-label>
+        <input matInput placeholder="Indian" formControlName="nationality" name="nationality" [(ngModel)]="basicInfo.nationality" [class.is-invalid]="basic.submitted && basicInfoFormGroup.get('nationality')?.invalid">
+        <mat-error class="invalid-feedback">Nationality is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxFlex="20">
+      <mat-form-field appearance="fill">
+        <mat-label>Passport Number</mat-label>
+        <input matInput placeholder="0987 7654 9876" formControlName="passportNumber"  name="passportNumber" [(ngModel)]="basicInfo.passportNumber" [class.is-invalid]="basic.submitted && basicInfoFormGroup.get('passportNumber')?.invalid">
+        <mat-error class="invalid-feedback">Passport number is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxFlex="20">
+      <mat-form-field class="columns"  appearance="fill">
+        <mat-label *ngIf="PassportFile; else passportFileTemplate">{{PassportFile.name}}</mat-label>
+        <ng-template #passportFileTemplate>
+            <mat-label>Passport File</mat-label>
+        </ng-template>
+        <input matInput disabled>
+        <button  mat-icon-button matSuffix (click)="fileInput.click()">
+            <mat-icon class="material-icons">attach_file</mat-icon>
+        </button>
+        <input hidden (change)="onSelectPassportFile($event)" #fileInput type="file" id="file">
+    </mat-form-field>
+    </div>
+  </div>
+  <div align="end">
+    <button type="submit" mat-raised-button color="primary" matStepperNext >Save & continue </button>
+  </div>
+</form>

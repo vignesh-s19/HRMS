@@ -1,0 +1,23 @@
+ <form [formGroup]="bankForm" #bank="ngForm">
+    <mat-card-header>
+      <mat-card-title>Bank Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="">
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Bank Name" formControlName="bankName" [class.is-invalid]="bank.submitted && bankForm.get('bankName')?.invalid">
+          <mat-error class="invalid-feedback">Bank name is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Bank A/c No" formControlName="bankNo" [class.is-invalid]="bank.submitted && bankForm.get('bankNo')?.invalid">
+          <mat-error class="invalid-feedback">Bank a/c no is required</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Bank Address" formControlName="bankAddress" [class.is-invalid]="bank.submitted && bankForm.get('bankAddress')?.invalid">
+          <mat-error class="invalid-feedback">Bank address is required</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+</form>

@@ -1,0 +1,77 @@
+ <form [formGroup]="basicForm" #basic="ngForm">
+      <div class="content pt10" fxLayout="row" fxLayout.xs="column"  fxFlexFill>
+          <div class="mb10"fxFlex="15">
+            <mat-form-field>
+              <input matInput placeholder="First name" formControlName="firstName" [class.is-invalid]="basic.submitted && basicForm.get('firstName')?.invalid">
+              <mat-error class="invalid-feedback"> First name is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="15">
+            <mat-form-field>
+              <input matInput placeholder="middle name">
+            </mat-form-field>
+          </div>
+          <div fxFlex="15">
+            <mat-form-field>
+              <input matInput placeholder="Last name" formControlName="lastName" [class.is-invalid]="basic.submitted && basicForm.get('lastName')?.invalid">
+              <mat-error class="invalid-feedback">Last name is required</mat-error>
+            </mat-form-field>
+          </div>
+      </div>
+      <div class="content pt10" fxLayout="row" fxLayout.xs="column"  fxFlexFill>
+        <div class="mb10"fxFlex="15">
+          <mat-form-field>
+            <input matInput placeholder="Name(As per Aadhar)" formControlName="nameAadhar" [class.is-invalid]="basic.submitted && basicForm.get('nameAadhar')?.invalid">
+            <mat-error class="invalid-feedback">Aadhar name is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="15">
+          <mat-form-field>
+            <input matInput placeholder="Aadhar Number" formControlName="AadharNo" [class.is-invalid]="basic.submitted && basicForm.get('AadharNo')?.invalid">
+            <mat-error class="invalid-feedback">Aadhar number is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="15">
+          <mat-form-field class="columns">
+              <mat-label *ngIf="aadharFiles; else newFile">{{aadharFiles.item(0).name}}</mat-label>
+              <ng-template #newFile>
+                  <mat-label>Aadhar card</mat-label>
+              </ng-template>
+              <input matInput disabled>
+              <button  mat-icon-button matSuffix (click)="fileInput.click()">
+                  <mat-icon class="material-icons">attach_file</mat-icon>
+              </button>
+              <input hidden (change)="aadharFile($event)" #fileInput type="file" id="file">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="content pt10" fxLayout="row" fxLayout.xs="column"  fxFlexFill>
+        <div class="mb10"fxFlex="15">
+          <mat-form-field>
+            <input matInput placeholder="Birth Date" [matDatepicker]="picker" (focus)="picker.open()"  formControlName="birthday" [class.is-invalid]="basic.submitted && basicForm.get('birthday')?.invalid">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-error class="invalid-feedback">Date is required</mat-error>
+          </mat-form-field>
+          <mat-datepicker #picker></mat-datepicker>
+        </div>
+        <div fxFlex="15">
+          <mat-form-field>
+            <input matInput placeholder="PAN Number" formControlName="PANno" [class.is-invalid]="basic.submitted && basicForm.get('PANno')?.invalid">
+            <mat-error class="invalid-feedback">PAN number is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="15">
+          <mat-form-field class="columns">
+            <mat-label *ngIf="selectedFiles; else panFile">{{selectedFiles.item(0).name}}</mat-label>
+            <ng-template #panFile>
+              <mat-label>PAN card</mat-label>
+            </ng-template>
+            <input matInput disabled>
+            <button  mat-icon-button matSuffix (click)="filePAN.click()">
+                <mat-icon class="material-icons">attach_file</mat-icon>
+            </button>
+            <input hidden (change)="selectFile($event)" #filePAN type="file" id="file">
+          </mat-form-field>
+        </div>
+      </div>
+ </form>

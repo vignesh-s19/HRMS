@@ -1,0 +1,43 @@
+<form [formGroup]="bankInfoFormGroup" (ngSubmit)="onSubmit()" #bank="ngForm">
+    <div class="content pt10" fxLayout="row" fxLayout.xs="column" fxFlexFill>
+        <div class="mb10" fxFlex="20">
+            <mat-form-field appearance="fill">
+                <mat-label>Bank Name</mat-label>
+                <input matInput placeholder="HDFC Bank" formControlName="bankName" name="bankName"
+                    [(ngModel)]="bankInfo.bankName"
+                    [class.is-invalid]="bank.submitted && bankInfoFormGroup.get('bankName')?.invalid">
+                <mat-error class="invalid-feedback"> Bank name is required</mat-error>
+            </mat-form-field>
+        </div>
+        <div fxFlex="20">
+            <mat-form-field appearance="fill">
+                <mat-label>Account Name</mat-label>
+                <input matInput placeholder="89038093489" formControlName="accountNumber" name="accountNumber"
+                    [(ngModel)]="bankInfo.accountNumber"
+                    [class.is-invalid]="bank.submitted && bankInfoFormGroup.get('accountNumber')?.invalid">
+                <mat-error class="invalid-feedback"> Bank name is required</mat-error>
+            </mat-form-field>
+        </div>
+        <div fxFlex="20">
+            <mat-form-field appearance="fill">
+                <mat-label>IFSC Code</mat-label>
+                <input matInput placeholder="HDID0004563" formControlName="ifscCode" name="ifscCode"
+                    [(ngModel)]="bankInfo.ifscCode"
+                    [class.is-invalid]="bank.submitted && bankInfoFormGroup.get('ifscCode')?.invalid">
+                <mat-error class="invalid-feedback"> Bank name is required</mat-error>
+            </mat-form-field>
+        </div>
+        <div fxFlex="20">
+            <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="As per Aadhar" formControlName="nameInBank" name="nameInBank"
+                    [(ngModel)]="bankInfo.nameInBank"
+                    [class.is-invalid]="bank.submitted && bankInfoFormGroup.get('nameInBank')?.invalid">
+                <mat-error class="invalid-feedback"> Bank name is required</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <!-- <div align="end">
+        <button type="submit" mat-raised-button color="primary" matStepperNext>Save & continue </button>
+    </div> -->
+</form>

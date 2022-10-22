@@ -1,0 +1,135 @@
+{
+  "users": [
+    {
+      "id": "4e479c6c-84f7-4ca1-9167-6e79ae35592a",
+      "username": "gallowaymckay@firewax.com",
+      "password": "password",
+      "email": "gallowaymckay@firewax.com",
+      "phoneNumber": "91 (933) 408-2867",
+      "fullName": "Lucas Stewart",
+      "userRoles": [
+        "admin",
+        "user"
+      ],
+      "isActive": false
+    },
+    {
+      "id": "4fa334ad-e21b-4f2a-af30-3693253f0ca2",
+      "username": "lucasstewart@firewax.com",
+      "password": "password",
+      "email": "lucasstewart@firewax.com",
+      "phoneNumber": "91 (950) 428-2833",
+      "fullName": "Janine Gilliam",
+      "userRoles": [
+        "admin",
+        "user"
+      ],
+      "isActive": false
+    },
+    {
+      "id": "34e2502f-dc23-47ab-aa38-9619c604bdcb",
+      "username": "janinegilliam@firewax.com",
+      "password": "password",
+      "email": "janinegilliam@firewax.com",
+      "phoneNumber": "91 (907) 561-2277",
+      "fullName": "Gracie Jenkins",
+      "userRoles": [
+        "admin",
+        "user"
+      ],
+      "isActive": true
+    }
+  ],
+  "UserProfiles": [
+    {
+      "userId": "34e2502f-dc23-47ab-aa38-9619c604bdcb",
+      "userBasicInfo": {
+        "userId": "34e2502f-dc23-47ab-aa38-9619c604bdcb",
+        "firstName": "Gracie",
+        "middleName": "",
+        "lastName": "",
+        "profileImageFile": "",
+        "profileImageUrl": "",
+        "dob": "03-01-1977",
+        "aadharName": "Ayala jhon cena",
+        "aadharNumber": 987656432345,
+        "aadharFile": "",
+        "aadharAttachmentUrl": "",
+        "panNumber": "GGMS1313A",
+        "panFile": "",
+        "panAttachmentUrl": "",
+        "nationality": "Indian",
+        "passportNumber": 3445668880,
+        "validVisaInformation": "gjqtyu567576",
+        "guardianType": "Father",
+        "guardianName": "Michal"
+      }
+    },
+    {
+      "userId": "4fa334ad-e21b-4f2a-af30-3693253f0ca2",
+      "userbasicInfo": {
+        "userId": "4fa334ad-e21b-4f2a-af30-3693253f0ca2",
+        "firstName": "lucasstewart",
+        "middleName": "",
+        "lastName": "",
+        "profileImageFile": "",
+        "profileImageUrl": "",
+        "dob": "03-01-1977",
+        "aadharName": "Ayala jhon cena",
+        "aadharNumber": 987656432345,
+        "aadharFile": "",
+        "aadharAttachmentUrl": "",
+        "panNumber": "GGMS1313A",
+        "panFile": "",
+        "panAttachmentUrl": "",
+        "nationality": "Indian",
+        "passportNumber": 3445668880,
+        "validVisaInformation": "gjqtyu567576",
+        "guardianType": "Father",
+        "guardianName": "Michal"
+      }
+    },
+    {
+      "userId": "4e479c6c-84f7-4ca1-9167-6e79ae35592a",
+      "userBasicInfo": {
+        "userId": "4e479c6c-84f7-4ca1-9167-6e79ae35592a",
+        "firstName": "gallow",
+        "middleName": "",
+        "lastName": "",
+        "profileImageFile": "",
+        "profileImageUrl": "",
+        "dob": "03-01-1977",
+        "aadharName": "Ayala jhon cena",
+        "aadharNumber": 987656432345,
+        "aadharFile": "",
+        "aadharAttachmentUrl": "",
+        "panNumber": "GGMS1313A",
+        "panFile": "",
+        "panAttachmentUrl": "",
+        "nationality": "Indian",
+        "passportNumber": 3445668880,
+        "validVisaInformation": "gjqtyu567576",
+        "guardianType": "Father",
+        "guardianName": "Michal"
+      },
+      "userContactInfo": {
+        "userId": "4e479c6c-84f7-4ca1-9167-6e79ae35592a",
+        "CorrespondenceAddress": {
+          "UserAddressId": "4e479c6c-84f7-4ca-sssss",
+          "Street": "",
+          "Apartment": "",
+          "City": "",
+          "State": "",
+          "PinCode": ""
+        },
+        "PermanentAddress": null,
+        "CorrespondenceAddressId": "4e479c6c-84f7-4ca-sssss",
+        "PermanentAddressId": null,
+        "IsCorrespondenceSameAsPermanent": true,
+        "HomePhone": "",
+        "MobilePhone": "",
+        "Email": ""
+      }
+    }
+  ]
+}

@@ -11,10 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Notification\MailTemplates\UserRegistration-min.html">
+    <None Update="Notification\MailTemplates\UserInvitation-min.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Notification\MailTemplates\UserRegistration.html">
+    <None Update="Notification\MailTemplates\UserConfirmation-min.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Notification\MailTemplates\UserConfirmation.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

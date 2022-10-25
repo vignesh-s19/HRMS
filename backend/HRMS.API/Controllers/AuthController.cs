@@ -48,11 +48,6 @@ namespace HRMS.API.Controllers
                 return ModelStateErrorResponseError();
             }
 
-            //var user = _userManager.Users
-            //    .Include(u => u.UserRoles)
-            //    .ThenInclude(ur => ur.Role)
-            //    .FirstOrDefault(u=>u.UserName == model.Username);
-
             var user = await _userManager.FindByNameAsync(model.Username);
 
             if(user == null)
@@ -60,8 +55,7 @@ namespace HRMS.API.Controllers
                 return ModelStateErrorResponseError("Login", AccountOptions.InvalidCredentialsErrorMessage);
             }
 
-
-            if (!user.IsActive)
+            if (user.UserStatus != UserStatus.Active )
             {
                 return ModelStateErrorResponseError("Login", AccountOptions.UserDeactivated);
             }

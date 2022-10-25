@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   BackendApiEndpointFamilyDetails: "http://localhost:3000/FamilyDetails",
   BackendApiEndpointReferenceDetails: "http://localhost:3000/ReferenceDetails",
-  API: 'http://localhost:3000'
+  API: 'https://localhost:5001'
 };
 
 /*

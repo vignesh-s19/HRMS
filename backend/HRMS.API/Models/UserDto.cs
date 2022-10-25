@@ -3,7 +3,34 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HRMS.API.Models
 {
-    public class UserDto
+    public class InviteUserDto
+    {
+        [Required]
+        [EmailAddress]
+        [MaxLength(254)]
+        [Display(Name = "Email address")]
+        public string Email { get; set; }
+
+        [Required]
+        public string UserRole { get; set; }
+
+        [Required]
+        public bool? RequestProfile { get; set; }
+    }
+
+    public class RegisterUserDto : InviteUserDto
+    {
+        [Required]
+        public string UserId { get; set; }
+
+        [Required]
+        public string Code { get; set; }
+
+        [Required]
+        public string Password { get; set; }
+    }
+
+    public class UserDto :AuditableDto
     {
         public string UserId { get; set; }
 
@@ -16,18 +43,24 @@ namespace HRMS.API.Models
         [EmailAddress]
         [MaxLength(254)]
         [Display(Name = "Email address")]
-        public string Email { get; set; }        
-
-        //public string Role { get; set; }
+        public string Email { get; set; }
 
         [Required]
         [MinLength(1)]
         public IEnumerable<string> UserRoles { get; set; }
 
-        public string AccountStatus { get; set; }
-        public string UserProfileStatus { get; set; }
-        public bool RequestProfile { get; set; }
+        public string UserStatus { get; set; }
+        public string FullName { get; set; }
 
+        public string ProfileStatus { get; set; }
+    }
 
+    public class UserStatusInputDto
+    {
+        [Required]
+        public string UserId { get; set; }
+        
+        [Required]
+        public string Status { get; set; }        
     }
 }

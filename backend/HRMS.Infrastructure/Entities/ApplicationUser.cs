@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace HRMS.Entities
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser, IAuditable
     {
         public string FullName { get; set; }
 
@@ -15,7 +15,12 @@ namespace HRMS.Entities
 
         public ProfileStatus ProfileStatus { get; set; }
 
-        public bool? IsActive { get; set; }
+        public UserStatus UserStatus { get; set; }
+
+        public DateTimeOffset DateCreated { get; set; }
+        public DateTimeOffset? DateModified { get; set; }
+        public string UserCreated { get; set; }
+        public string UserModified { get; set; }
     }
 
     //Last activity
@@ -37,6 +42,15 @@ namespace HRMS.Entities
     {
         public string ProfileReviewId { get; set; }
         public string Comment { get; set; }
+    }
+
+    public enum UserStatus
+    {
+        None = 0,
+        Invited = 1,
+        Active = 2,
+        Deactivated = 3,
+        Revoked = 4,
 
     }
 
@@ -49,15 +63,11 @@ namespace HRMS.Entities
         RequestedForEdit = 4,
         Completed = 5
     }
-
-    //---------------------------
-
-    //---------------------------
-
-
+    
     public class UserBasicInfo : IUserProfile 
     {
         public UserProfile UserProfile { get; set; }
+
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }

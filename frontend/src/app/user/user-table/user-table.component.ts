@@ -1,88 +1,101 @@
-import { Component, Inject, OnInit,ViewChild } from '@angular/core';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { UserInviteComponent } from '../user-invite/user-invite.component';
-import { UserService } from '../shared/user.service';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
-import { User } from '../shared/user.model';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { UserInviteComponent } from "../user-invite/user-invite.component";
+import { UserService } from "../shared/user.service";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { SelectionModel } from "@angular/cdk/collections";
+import { User, UserStatus } from "../shared/user.model";
 
-import { DialogService } from '../shared/dialog.service';
-import { UserViewComponent } from '../user-view/user-view.component';
-
-
-
+import { DialogService } from "../shared/dialog.service";
+import { UserEditRoleComponent } from "../user-edit-role/user-edit-role.component";
 
 @Component({
-  selector: 'app-user-table',
-  templateUrl: './user-table.component.html',
-  styleUrls: ['./user-table.component.scss']
+  selector: "app-user-table",
+  templateUrl: "./user-table.component.html",
+  styleUrls: ["./user-table.component.scss"],
 })
 export class UserTableComponent implements OnInit {
-  displayedColumns: string[] = ['select','email', 'role','status','lastActivity','Action'];
+  displayedColumns: string[] = [
+    "select",
+    "email",
+    "role",
+    "status",
+    "lastActivity",
+    "Action",
+  ];
   dataSource: MatTableDataSource<User>;
-  statusList:string[]=['Active','Deactive','Pending','Expired'];
-  user:User=new User();
+  statusList: string[] = ["Invited", "Active", "Deactivated", "Revoked"];
+  user: User = new User();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   selection = new SelectionModel<User>(true, []);
-  showEmail:boolean=false;
-  constructor( private userService: UserService,
-     public dialog:MatDialog,
-     private dialogService:DialogService,
-     ) { }
 
+  constructor(
+    private userService: UserService,
+    public dialog: MatDialog,
+    private dialogService: DialogService
+  ) {}
 
   ngOnInit(): void {
-    this.getAlluser();
-   
+    this.loadUserDataSource();
   }
 
-  
-  openDialog() {
-    this.dialog.open(UserInviteComponent, {
-      width:'30%'
-    }).afterClosed().subscribe(val=>{
-      if(val==='Invite'){
-        this.getAlluser();
-      }
-    });
+  ngOnDestroy(): void {
+    this.selection.changed.unsubscribe();
   }
 
-  editUser(row:any) {
-
-    this.dialog.open(UserInviteComponent, {
-      width:'30%',
-      data:row
-    }).afterClosed().subscribe(val=>{
-      if(val==='save'){
-        this.getAlluser();
-      }
-    });
-    this.showEmail = true;
+  onInviteUser() {
+    this.dialog
+      .open(UserInviteComponent, {
+        width: "40%",
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result.event == "inviteUser") {
+          result.data.users.forEach((user) => {
+            this.dataSource.data.push(user);
+          });
+          //refresh
+          this.dataSource.data = this.dataSource.data.map((o) => {
+            return o;
+          });
+        }
+      });
   }
 
-  openProfile() {
-    this.dialog.open(UserViewComponent, {
-      width:'40%'
-    });
+  onEditUser(row: any) {
+    this.dialog
+      .open(UserEditRoleComponent, {
+        width: "20%",
+        data: row,
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result.event == "editUserRole") {
+          row.userRoles = result.data.userRoles;
+        } else if (result === "save") {
+          this.loadUserDataSource();
+        }
+      });
   }
 
-
-  getAlluser(){
-    this.userService.getAll()
-    .subscribe({
-      next:(res: any)=>{
-       this.dataSource=new MatTableDataSource(res);
-       this.dataSource.paginator=this.paginator;
-       this.dataSource.sort=this.sort;
+  loadUserDataSource() {
+    this.userService.getAll().subscribe({
+      next: (res: any) => {
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
-      error:(err)=>{
-        alert("something went wrong");
-      }
-    })
+    });
+  }
+
+  isActionSelected(action: string): boolean {
+    return !this.selection.selected.some(
+      (user: any) => user.userStatus === action
+    );
   }
 
   applyFilter(event: Event) {
@@ -94,83 +107,55 @@ export class UserTableComponent implements OnInit {
     }
   }
 
-
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
+  }
+
+  updateSelectedUsersStatus(fromStatus: string, toStatus:string) {
+    this.selection.selected.filter((user)=> user.userStatus == fromStatus).forEach((user) => {
+
+      let userStatus: UserStatus  =   {
+         userId : user.userId,
+         status : toStatus
+      };
+
+      this.userService
+        .updateUserStatus(userStatus)
+        .subscribe((_res: any) => {
+          if (_res) {
+            user.userStatus = toStatus;
+          }
+        });
+    });
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach((row) => this.selection.select(row));
+    console.log(this.selection.selected);
+  }
+
+  onDeleteUser(row: User) {
+    this.dialogService
+      .confirmDialog({
+        title: "Delete Confirmation!",
+        message: `Are you sure to delete  ` + row.email,
+        confirmCaption: "Yes",
+        cancelCaption: "No",
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.userService.deleteUser(row.userId).subscribe((data) => {
+            this.dataSource.data = this.dataSource.data.filter(
+              (u) => u.userId !== row.userId
+            );
+          });
+        }
+      });
+  }
 }
-
-// activateSelectedUsers() {
-//   this.selection.selected.forEach( user => {
-
-//     this.userService.activateUser(user,user.id).subscribe((_res: any)=>{
-//       user.status="Active";
-//       alert("Activated");
-//       this.getAlluser();
-//     });
-  
-//  });
- 
-// }
-
-// deActivateSelectedUsers() {
-//   this.selection.selected.forEach( user => {
-//     this.userService.activateUser(user,user.id).subscribe((_res: any)=>{
-//       user.status="Deactive";
-//       alert("deactivated")
-//       console.log(this.selection.selected);
-//       this.getAlluser();
-//     });
-//  });
- 
-// }
-
-// deActivateUsers(id:any){
-//   this.userService.activateUser(user,id).subscribe((_res: any)=>{
-//     this.user.status="Deactive";
-//     alert("deactivated")
-//     this.getAlluser();
-//   });
-// }
-
-// pendingUsers(){
-//   this.selection.selected.forEach( user => {
-
-//     this.userService.activateUser(user,user.id).subscribe((_res: any)=>{
-//       user.status="Pending";
-//       console.log(this.selection.selected);
-      
-//       this.getAlluser();
-//     });
-  
-//  });
-// }
-
-/** Selects all rows if they are not all selected; otherwise clear selection. */
-masterToggle() {
-  this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
-      console.log(this.selection.selected);
-      
-}
-
- deletePrompt(row){
-  this.dialogService.confirmDialog({
-    title:'Delete Confirmation!',
-    message:`Are you sure to delete  `+row.email,
-    confirmCaption: 'Yes',
-        cancelCaption: 'No'
-  }).afterClosed().subscribe(res=>{
-    if(res){
-      this.userService.deleteUser(row.id)
-      .subscribe(data=>{
-        this.getAlluser();
-      }); 
-    }
-  });
- }
-}
-
-

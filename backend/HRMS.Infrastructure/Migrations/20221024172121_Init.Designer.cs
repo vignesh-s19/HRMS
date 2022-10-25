@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRMS.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221020161745_inituser")]
-    partial class inituser
+    [Migration("20221024172121_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,6 +56,12 @@ namespace HRMS.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTimeOffset>("DateCreated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTimeOffset?>("DateModified")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Email")
                         .HasColumnType("TEXT")
                         .HasMaxLength(256);
@@ -89,15 +95,27 @@ namespace HRMS.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("ProfileStatus")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("UserCreated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserModified")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("UserName")
                         .HasColumnType("TEXT")
                         .HasMaxLength(256);
+
+                    b.Property<int>("UserStatus")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -156,7 +174,13 @@ namespace HRMS.Infrastructure.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("AdharName")
+                    b.Property<string>("AadhaarAttachmentUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AadhaarName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AadhaarNumber")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DOB")
@@ -166,9 +190,6 @@ namespace HRMS.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTimeOffset?>("DateModified")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Dependents")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
@@ -183,19 +204,22 @@ namespace HRMS.Infrastructure.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("MaritalStatus")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("MiddleName")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nationality")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Nominee")
+                    b.Property<string>("PANAttachmentUrl")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PAN")
+                    b.Property<string>("PANNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PassportNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProfileImageUrl")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserCreated")
@@ -204,7 +228,7 @@ namespace HRMS.Infrastructure.Migrations
                     b.Property<string>("UserModified")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserProfileImageUrl")
+                    b.Property<string>("ValidVisaInformation")
                         .HasColumnType("TEXT");
 
                     b.HasKey("UserId");

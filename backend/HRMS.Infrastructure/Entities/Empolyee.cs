@@ -3,7 +3,14 @@ using System.Collections.Generic;
 
 namespace HRMS.Entities
 {
-    public abstract class Auditable
+    public interface IAuditable
+    {
+        public DateTimeOffset DateCreated { get; set; }
+        public DateTimeOffset? DateModified { get; set; }
+        public string UserCreated { get; set; }
+        public string UserModified { get; set; }
+    }
+    public abstract class Auditable : IAuditable
     {
         public DateTimeOffset DateCreated { get; set; }
         public DateTimeOffset? DateModified { get; set; }

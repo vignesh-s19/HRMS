@@ -45,8 +45,8 @@ this.userService.getById(id).subscribe((res) => {
  () =>  {
   if(this.user === undefined) {return}
   else{
-    this.user.isActive;
-  if(this.user.isActive){
+    this.user.userStatus ==='active';
+  if(this.user.userStatus ==='active'){
     return
   }else{
     // The rest of the code

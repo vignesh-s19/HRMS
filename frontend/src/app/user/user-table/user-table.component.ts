@@ -126,6 +126,7 @@ export class UserTableComponent implements OnInit {
         .subscribe((_res: any) => {
           if (_res) {
             user.userStatus = toStatus;
+            //user status updated successfully
           }
         });
     });

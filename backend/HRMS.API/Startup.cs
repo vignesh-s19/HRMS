@@ -44,13 +44,6 @@ namespace HRMS.API
                     new MediaTypeApiVersionReader("ver"));
             });
 
-    //        services.AddVersionedApiExplorer(
-    //options =>
-    //{
-    //    options.GroupNameFormat = "'v'VVV";
-    //    options.SubstituteApiVersionInUrl = true;
-    //});
-
             var appAssembly = typeof(AppDbContext).Assembly.GetName().Name;
 
             services.AddDbContext<AppDbContext>(config => {

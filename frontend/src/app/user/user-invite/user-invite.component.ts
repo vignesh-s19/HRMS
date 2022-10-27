@@ -63,7 +63,7 @@ export class UserInviteComponent implements OnInit {
 
   onInvite(): void {
     if (this.emailList.length == 0) {
-      alert("email is required");
+      alert("email is required"); //should be part of form validation
       return;
     }
 

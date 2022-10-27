@@ -122,13 +122,16 @@ namespace HRMS.Data
 
             foreach (var insertedEntry in insertedEntries)
             {
-                var auditableEntity = insertedEntry as Auditable;
+                var auditableEntity = insertedEntry as IAuditable;
                 //If the inserted object is an Auditable. 
                 if (auditableEntity != null)
                 {
                     auditableEntity.DateCreated = DateTimeOffset.UtcNow;
                     auditableEntity.UserCreated = currentUsername;
                 }
+
+               // var audit = insertedEntry as IAuditable;
+
             }
 
             var modifiedEntries = this.ChangeTracker.Entries()

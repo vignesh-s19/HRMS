@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HRMS.Infrastructure.Migrations
 {
-    public partial class inituser : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,13 @@ namespace HRMS.Infrastructure.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FullName = table.Column<string>(nullable: true)
+                    FullName = table.Column<string>(nullable: true),
+                    ProfileStatus = table.Column<int>(nullable: false),
+                    UserStatus = table.Column<int>(nullable: false),
+                    DateCreated = table.Column<DateTimeOffset>(nullable: false),
+                    DateModified = table.Column<DateTimeOffset>(nullable: true),
+                    UserCreated = table.Column<string>(nullable: true),
+                    UserModified = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -202,16 +208,18 @@ namespace HRMS.Infrastructure.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     MiddleName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    UserProfileImageUrl = table.Column<string>(nullable: true),
+                    ProfileImageUrl = table.Column<string>(nullable: true),
                     DOB = table.Column<DateTime>(nullable: false),
-                    AdharName = table.Column<string>(nullable: true),
-                    PAN = table.Column<string>(nullable: true),
+                    AadhaarName = table.Column<string>(nullable: true),
+                    AadhaarNumber = table.Column<string>(nullable: true),
+                    AadhaarAttachmentUrl = table.Column<string>(nullable: true),
+                    PANNumber = table.Column<string>(nullable: true),
+                    PANAttachmentUrl = table.Column<string>(nullable: true),
                     Nationality = table.Column<string>(nullable: true),
+                    PassportNumber = table.Column<string>(nullable: true),
+                    ValidVisaInformation = table.Column<string>(nullable: true),
                     GaurdianType = table.Column<int>(nullable: false),
-                    GuardianName = table.Column<string>(nullable: true),
-                    MaritalStatus = table.Column<bool>(nullable: false),
-                    Dependents = table.Column<string>(nullable: true),
-                    Nominee = table.Column<string>(nullable: true)
+                    GuardianName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

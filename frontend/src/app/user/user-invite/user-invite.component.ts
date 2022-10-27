@@ -1,176 +1,126 @@
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogService } from '../shared/dialog.service';
-import { UserService } from '../shared/user.service';
-import { InviteUser, User } from '../shared/user.model';
+import { ENTER, COMMA } from "@angular/cdk/keycodes";
+import { Component, Inject, OnInit } from "@angular/core";
+import {
+  FormGroup,
+  FormBuilder,
+  FormControl,
+  Validators,
+} from "@angular/forms";
+import { MatDialogRef } from "@angular/material/dialog";
+import { UserService } from "../shared/user.service";
+import { InviteUser, User } from "../shared/user.model";
+import { forkJoin, Observable } from "rxjs";
+import RegexValidator from "src/app/shared/utilities/regex-validator";
 
 @Component({
-  selector: 'app-user-invite',
-  templateUrl: './user-invite.component.html',
-  styleUrls: ['./user-invite.component.scss']
+  selector: "app-user-invite",
+  templateUrl: "./user-invite.component.html",
+  styleUrls: ["./user-invite.component.scss"],
 })
 export class UserInviteComponent implements OnInit {
-
-  userForm!:FormGroup;
-  public seperatorKeysCodes:number[]=[ENTER, COMMA];
-  public emailList=[];
-  removable=true;
-  actionBtn:string="Invite";
-  showEmail:boolean=false;
-  formTitle:string="Invite users:";
+  userForm!: FormGroup;
+  public seperatorKeysCodes: number[] = [ENTER, COMMA];
+  public emailList = [];
+  public emailListErrors = [];
+  removable = true;
+  actionBtn: string = "Invite";
+  formTitle: string = "Invite users:";
 
   constructor(
-    private formBuilder:FormBuilder,
-    private userService:UserService, 
-    private dialogRef:MatDialogRef<UserInviteComponent>,
-    @Inject(MAT_DIALOG_DATA)
-    public editData:any,
-    private dialogService:DialogService) { }
-
-  paste(event: ClipboardEvent): void {
-       event.preventDefault();
-       event.clipboardData
-            .getData('Text')
-            .split(/;|,|\n/)
-            .forEach(value => {
-              if(value.trim()){
-                
-
-                //check duplication warning message 
-//if email exsit raise error and remove from list
-
-
-                this.emailList.push({ 
-                    value: value.trim() 
-                  });
-                return;
-              }
-            });
-    }
-
-  add(event): void {
-        console.log(event.value);
-        if (event.value) {
-            if (this.validateEmail(event.value)) {
-
-              if(event.value )
-                this.emailList.push({ value: event.value, invalid: false });
-            }
-            else {
-                this.emailList.push({ value: event.value, invalid: true });
-            }
-        }
-        if (event.input) {
-            event.input.value = '';
-        }
-    }
-
-  removeEmail(data: any): void {
-        console.log('Removing ' + data)
-        if (this.emailList.indexOf(data) >= 0) {
-            this.emailList.splice(this.emailList.indexOf(data), 1);
-        }
-   }
-
+    private _formBuilder: FormBuilder,
+    private _userService: UserService,
+    private _dialogRef: MatDialogRef<UserInviteComponent>
+  ) {}
 
   ngOnInit(): void {
-    this.userForm=this.formBuilder.group({
-      email:[''],
-      role:[''],
-      docs:[''],
-      requestProfile:[''],
-      empForm:[''],
-      status:[''],
+    this.userForm = this._formBuilder.group({
+      email: [null],
+      userRole: ["", [Validators.required]],
+      requestProfile: [false],
     });
-    if(this.editData){
-          this.formTitle="update user:"
-          this.showEmail=true;
-          this.actionBtn="save";
-          this.userForm.controls['email'].setValue(this.editData.email);
-          this.userForm.controls['role'].setValue(this.editData.role);
-          this.userForm.controls['docs'].setValue(this.editData.docs);
-          this.userForm.controls['empForm'].setValue(this.editData.empForm);
-          this.userForm.controls['status'].setValue(this.editData.status);
-          this.userForm.controls['requestProfile'].setValue(this.editData.profileStatus);
-
-      }  
   }
 
-  invite(): void{
-    this.showEmail=true;
-    if(!this.editData){
-      if(this.userForm.valid){
-
-this.emailList.forEach((email)=>{
-
-  let user: InviteUser= {
-    email: email,  
-  userRole: this.editData.role,
-  requestProfile:this.editData.requestProfile
-  };
-
-  this.userService.inviteUser(user)
-  .subscribe({
-    next:(res)=>{
-      this.dialogService.confirmUpdate({
-        title:'Invitation Confirmation!',
-        message:`${user.email} invited successfully `,
-        confirmCaption: 'okay',
-        cancelCaption:''
-      })
-      console.log(this.userForm.value);
-      this.userForm.reset(); 
-      this.dialogRef.close();
-    },
-    error:()=>{
-      alert("something went wrong");
-    }
-  })
-
-});
-
-       
-      }
-    }
-    else{
-      this.updateUser();
-    } 
-  } 
-
-  updateUser(): void{
-    this.userService.updateUser(this.userForm.value,this.editData.id)
-    .subscribe({
-      next:(res)=>{
-        this.dialogService.confirmUpdate({
-          title:'Update Confirmation!',
-          message:`You have updated successfully `,
-          confirmCaption: 'okay',
-          cancelCaption:''
-        })
-        this.userForm.reset();
-        this.dialogRef.close('save');
-      },
-      error:()=>{
-        alert("Something went wrong");
-      }
-    })
+  onEmailPaste(event: ClipboardEvent): void {
+    event.preventDefault();
+    this.emailListErrors.length = 0;
+    var emails = event.clipboardData.getData("Text").split(/;|,|\n/);
+    emails.forEach((value) => this.addEmailToList(value));
   }
 
-  private validateArrayNotEmpty(c: FormControl) {
-    if (c.value && c.value.length === 0) {
-      return {
-        validateArrayNotEmpty: { valid: false }
+  onEmailAdd(event: any): void {
+    this.emailListErrors.length = 0;
+    this.addEmailToList(event.value);
+    if (event.input) {
+      event.input.value = "";
+    }
+  }
+
+  onEmailRemove(data: any): void {
+    if (this.emailList.indexOf(data) >= 0) {
+      this.emailList.splice(this.emailList.indexOf(data), 1);
+    }
+  }
+
+  onInvite(): void {
+    if (this.emailList.length == 0) {
+      alert("email is required"); //should be part of form validation
+      return;
+    }
+
+    if (this.userForm.valid) {
+      let user: InviteUser = {
+        email: null,
+        userRole: this.userForm.get("userRole").value,
+        requestProfile: this.userForm.get("requestProfile").value,
       };
+
+      let Observables: Observable<User>[] = [];
+
+      this.emailList
+        .filter((email) => {
+          return !email.invalid;
+        })
+        .forEach((email) => {
+          user.email = email.value;
+
+          var inviteUserObs = this._userService.inviteUser(user);
+          Observables.push(inviteUserObs);
+        });
+
+      forkJoin(Observables).subscribe((users) => {
+        this.userForm.reset();
+        this._dialogRef.close({
+          event: "inviteUser",
+          data: { users: users },
+        });
+      });
     }
-    return null;
   }
 
-  private validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+  private addEmailToList(value: string): void {
+    let email = value.trim();
+    if (email) {
+      if (this.emailList.some((e) => e.value === email)) {
+        this.emailListErrors.push(`Duplicate:  ${email} removed!`);
+        return;
+      }
+
+      let isValid = RegexValidator.validateEmail(email);
+      if (!isValid) {
+        this.emailListErrors.push(`Invalid:  ${email} removed!`);
+        return;
+      }
+
+      this._userService.emailExists(email).subscribe((exists) => {
+        if (!exists) {
+          this.emailList.push({
+            value: email,
+            invalid: !isValid,
+          });
+        } else {
+          this.emailListErrors.push(`Already Exists:  ${email} removed!`);
+        }
+      });
+    }
   }
-
-
 }

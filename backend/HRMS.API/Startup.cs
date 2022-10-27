@@ -44,13 +44,6 @@ namespace HRMS.API
                     new MediaTypeApiVersionReader("ver"));
             });
 
-    //        services.AddVersionedApiExplorer(
-    //options =>
-    //{
-    //    options.GroupNameFormat = "'v'VVV";
-    //    options.SubstituteApiVersionInUrl = true;
-    //});
-
             var appAssembly = typeof(AppDbContext).Assembly.GetName().Name;
 
             services.AddDbContext<AppDbContext>(config => {
@@ -131,6 +124,11 @@ namespace HRMS.API
 
             services.AddAutoMapper(AutoMapperConfiguration.RegisteredProfiles());
 
+            services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+            {
+                builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+            }));
+
             services.AddControllers();
 
             services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
@@ -158,6 +156,11 @@ namespace HRMS.API
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseEndpoints(endpoints =>
             {

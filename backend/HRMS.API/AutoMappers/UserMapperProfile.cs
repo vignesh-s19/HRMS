@@ -17,7 +17,13 @@ namespace HRMS.API.AutoMappers
 
             CreateMap<ApplicationUser, UserDto>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FullName == null ? src.UserName : src.FullName))
+                .ForMember(dest => dest.UserStatus, opt => opt.MapFrom(src => src.UserStatus.ToString()))
+                .ForMember(dest => dest.ProfileStatus, opt => opt.MapFrom(src => src.ProfileStatus.ToString()))
                 .ForMember(dest => dest.UserRoles, opt => opt.MapFrom(src => src.UserRoles.Select(s => s.Role.Name)));
+              //  .IncludeBase<IAuditable, AuditableDto>();
+
+
 
             CreateMap<UserProfile, UserProfileDto>();
 

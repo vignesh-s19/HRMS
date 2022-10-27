@@ -6,12 +6,16 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { RouterTabs } from './router-tab/router-tabs.directive';
 import { RouterTab } from './router-tab/router-tab.directive';
 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { HttpErrorInterceptor } from './http-error.interceptor';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    HttpClientModule
   ],
   declarations: [
     PageNotFoundComponent,
@@ -23,6 +27,19 @@ import { RouterTab } from './router-tab/router-tab.directive';
     PageNotFoundComponent,
     RouterTabs,
     RouterTab,
+  ],
+  providers: [
+
+    {
+ 
+      provide: HTTP_INTERCEPTORS,
+ 
+      useClass: HttpErrorInterceptor,
+ 
+      multi: true
+ 
+    }
+ 
   ]
 })
 export class SharedModule { }

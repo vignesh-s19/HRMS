@@ -1,21 +1,19 @@
-using HRMS.Data;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using Serilog;
-using System.IO;
-
 namespace HRMS.API
 {
+    using HRMS.Data;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Hosting;
+    using Serilog;
+
     public class Program
     {
         public static void Main(string[] args)
         {
-
-          
-
             CreateHostBuilder(args).Build()
                  .MigrateDatabases()
-                 .CreateRolesAndAdminUser()                 
+                 .CreateRolesAndAdminUser()
+
                  .Run();
         }
 
@@ -24,6 +22,10 @@ namespace HRMS.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                }).UseSerilog();
+                })
+             .ConfigureAppConfiguration(configurationBuilder =>
+             {
+                 configurationBuilder.AddEnvironmentVariables();
+             }).UseSerilog();
     }
 }

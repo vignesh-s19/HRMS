@@ -208,6 +208,14 @@ namespace HRMS.API.Models
         public string WorkPhone { get; set; }
     }
 
+    public class UserPersionalInfoDto
+    {
+        public string UserPersionalInfo { get; set; }
+        public string PersonName { get; set; }
+        public DateTime PersonDOB { get; set; }
+        public RelationshipDto PersonRelationship { get; set; }
+    }
+
     public class FamilyInfoDto
     {
         public string FamilyInfoId { get; set; }

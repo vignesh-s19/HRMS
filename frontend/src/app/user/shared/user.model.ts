@@ -1,20 +1,12 @@
 export class InviteUser {
- 
-  email: string;  
+  email: string;
   userRole: string;
-  requestProfile:boolean;  
+  requestProfile: boolean;
 }
 
-export class User {
-  id: string;
-  userName: string;
-  password:string;
-  email: string;
-  fullName: string;
-  userRoles: string[];
-  phoneNumber: string;
-  profileStatus:ProfileStatus; 
-  isActive:boolean;
+export class UserStatus {
+  userId: string;
+  status: string;
 }
 
 export abstract class Auditable {
@@ -22,6 +14,18 @@ export abstract class Auditable {
   dateModified: Date;
   userCreated: string;
   userModified: string;
+}
+
+export class User extends Auditable {
+  userId: string;
+  userName: string;
+  password: string;
+  email: string;
+  fullName: string;
+  userRoles: string[];
+  phoneNumber: string;
+  profileStatus: ProfileStatus;
+  userStatus: string;
 }
 
 export abstract class IUserProfile extends Auditable {
@@ -60,17 +64,16 @@ export enum GuardianType {
   Guardian,
 }
 
- export enum ProfileStatus
-{
-    None = 0,
-    Pending = 1,
-    InProgress = 2,
-    Submitted = 3,
-    RequestedForEdit = 4,
-    Completed = 5
+export enum ProfileStatus {
+  None = 0,
+  Pending = 1,
+  InProgress = 2,
+  Submitted = 3,
+  RequestedForEdit = 4,
+  Completed = 5,
 }
 
-export class UserContactInfo extends IUserProfile { 
+export class UserContactInfo extends IUserProfile {
   CorrespondenceAddress: UserAddress;
   PermanentAddress: UserAddress;
   CorrespondenceAddressId: string;

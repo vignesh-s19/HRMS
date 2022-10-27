@@ -105,7 +105,7 @@ namespace HRMS.Data
                     throw new ArgumentNullException("AppSettings:adminUserEmail");
                 }
 
-                AddUserToRole(scope.ServiceProvider, "Admin", adminUserEmail, adminPwd, Roles.Admin);
+                createUser(scope.ServiceProvider, "Admin", adminUserEmail, adminPwd, Roles.Admin);
             }
             return host;
         }
@@ -137,7 +137,7 @@ namespace HRMS.Data
         /// <param name="userEmail">User Email</param>
         /// <param name="userPwd">User Password. Used to create the user if not exists.</param>
         /// <param name="roleName">Role Name</param>
-        private static void AddUserToRole(IServiceProvider serviceProvider, string fullName, string userEmail,
+        private static void createUser(IServiceProvider serviceProvider, string fullName, string userEmail,
             string userPwd, string roleName)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -153,7 +153,10 @@ namespace HRMS.Data
                     Email = userEmail,
                     UserName = userEmail,
                     FullName = fullName,
-                    EmailConfirmed = true                      
+                    EmailConfirmed = true,
+                    UserStatus =  UserStatus.Active,
+                     ProfileStatus = ProfileStatus.None
+                      
                 };
 
                 Task<IdentityResult> taskCreateAppUser = userManager.CreateAsync(newAppUser, userPwd);

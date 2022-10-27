@@ -34,6 +34,7 @@ import { UserInviteComponent } from './user-invite/user-invite.component';
 import { UserTableComponent } from './user-table/user-table.component';
 import { UserViewComponent } from './user-view/user-view.component';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
+import { UserEditRoleComponent } from './user-edit-role/user-edit-role.component';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.
     UserInviteComponent,
     UserTableComponent,
     UserViewComponent,
+    UserEditRoleComponent,
     ConfirmDialogComponent]
 })
 export class UserModule { }

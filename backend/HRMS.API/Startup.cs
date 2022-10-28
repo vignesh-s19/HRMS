@@ -6,6 +6,7 @@ using HRMS.Infrastructure.Repositories;
 using HRMS.Interfaces;
 using HRMS.Notification;
 using HRMS.Services;
+using HRMS.Utilities;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -106,7 +107,7 @@ namespace HRMS.API
             }
 
             Log.Logger = new LoggerConfiguration()
-              .WriteTo.File(Path.Combine("D:\\HRMS\\Logs\\", "Test-Log-{Date}.txt"),
+              .WriteTo.File(PathHelper.Combine("/HRMS/Logs/", "Test-Log-{Date}.txt"),
               rollingInterval: RollingInterval.Day, fileSizeLimitBytes: 100000)
               .CreateLogger();
 

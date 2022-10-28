@@ -1,4 +1,5 @@
-﻿using HRMS.API.Models;
+﻿using AutoMapper;
+using HRMS.API.Models;
 using HRMS.Entities;
 using HRMS.Interfaces;
 using HRMS.Notification;
@@ -24,12 +25,14 @@ namespace HRMS.API.Controllers
 
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IMapper _mapper;
 
         public AuthController(
           UserManager<ApplicationUser> userManager,
           SignInManager<ApplicationUser> signInManager,
           ClientAppMetadata clientAppMetadata,
           IEmailSender emailSender,
+          IMapper mapper,
           ILogger logger
           )
         {
@@ -37,6 +40,7 @@ namespace HRMS.API.Controllers
             _signInManager = signInManager;
             _clientAppMetadata = clientAppMetadata;
             _emailSender = emailSender;
+            _mapper = mapper;
             _logger = logger;
         }
 
@@ -75,17 +79,14 @@ namespace HRMS.API.Controllers
                 await _signInManager.SignInAsync(user, props);
                 _logger.Information($"loggedIn successfully {user.UserName} {user.Id}");
 
-               var userRoles = await _userManager.GetRolesAsync(user);
-                var usermodel = new UserDto
-                {
-                    UserId = user.Id,
-                    Email = user.Email,
-                    UserRoles = userRoles,
-                    UserName = user.UserName
-                };
+                var userRoles = await _userManager.GetRolesAsync(user);
 
-                return Ok(usermodel);
+                var userDto = _mapper.Map<UserDto>(user);
+                userDto.UserRoles = userRoles;
+
+                return Ok(userDto);
             }
+
             _logger.Warning($"login failed: {model.Username}");
 
             return ModelStateErrorResponseError("Login", AccountOptions.InvalidCredentialsErrorMessage);

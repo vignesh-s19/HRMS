@@ -27,7 +27,7 @@ namespace HRMS.Data
 
                 var dbPath = ssoConnection.Split(Delimiters.EqualsTo).Last();
 
-                var dirPath = Path.GetDirectoryName(dbPath);
+                var dirPath = PathHelper.GetDirectoryName(dbPath);
                 if(!string.IsNullOrWhiteSpace(dirPath))
                 {
                     Directory.CreateDirectory(dirPath);
